@@ -27,40 +27,91 @@
       }
     });
   }
+
+  // function removeCharacter(name) {
+  //   console.log('removing', name);
+  //   SelectedCharacterStore.update((characters) => {
+  //     let newSelectedCharacters = characters.filter(
+  //       (selectedCharacter) => selectedCharacter.name != name
+  //     );
+  //     selected = newSelectedCharacters.map((character) => character.name);
+  //     return newSelectedCharacters;
+  //   });
+  // }
 </script>
 
-<button
-  class={$SelectedCharacterStore
-    .map((character) => character.name)
-    .indexOf(character.name) !== -1
-    ? 'container selected'
-    : 'container'}
-  on:click={() => selectedCharacter(character.name)}
->
-  <h2>{character.name}</h2>
-  <slot />
-</button>
+<div class="container">
+  <button
+    class={$SelectedCharacterStore
+      .map((character) => character.name)
+      .indexOf(character.name) !== -1
+      ? 'btn selected'
+      : 'btn'}
+    on:click|stopPropagation={() => selectedCharacter(character.name)}
+  >
+    <!-- {#if $SelectedCharacterStore.length > 0 && $SelectedCharacterStore
+        .map((character) => character.name)
+        .indexOf(character.name) !== -1} -->
+    <!-- <button
+      class="close-btn"
+      on:click|stopPropagation={() => removeCharacter(character.name)}
+      disabled={$SelectedCharacterStore.length > 0 &&
+      $SelectedCharacterStore
+        .map((character) => character.name)
+        .indexOf(character.name) !== -1
+        ? false
+        : true}><span class="material-symbols-outlined"> cancel </span></button
+    > -->
+    <!-- {/if} -->
+    <img
+      src={`images/${character.name.replaceAll(/\s/g, '_')}.png`}
+      alt={character.name}
+    />
+    <h2>{character.name}</h2>
+    <slot />
+  </button>
+</div>
 
 <style>
   .container {
     border-radius: 12px;
-    border: 1px solid #ccc;
-    padding: 2em;
+    position: relative;
+  }
+  .btn {
     background-color: transparent;
     cursor: pointer;
+    width: 100%;
+    height: 100%;
+    border-radius: 12px;
   }
-  .container:hover {
+  .btn:hover {
     background-color: #ccc;
     border: 1px solid #000;
+  }
+  /* .close-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    border-radius: 1em;
+    background-color: transparent;
+    cursor: pointer;
+    border: none;
+    z-index: 99;
+    height: 48px;
+    width: 48px;
+    border-radius: 100%;
+  } */
+  img {
+    height: auto;
   }
   h2 {
     margin: 0;
     padding-bottom: 1em;
   }
   .selected {
-    background-color: darkgreen;
+    border: 1px solid darkgreen;
+    background-color: green;
     color: white;
-    border: 1px solid #000;
   }
   .container.selected:hover {
     background-color: burlywood;

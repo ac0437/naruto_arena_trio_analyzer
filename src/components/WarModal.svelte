@@ -106,6 +106,7 @@
     overflow: auto;
     display: grid;
     place-items: center;
+    z-index: 99999;
   }
   .container {
     background-color: #fff;

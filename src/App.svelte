@@ -11,7 +11,6 @@
 <main>
   <CharacterFilter />
   <!-- <WarFilter /> -->
-  <p>Currently {$SelectedCharacterStore.length}/3 characters selected</p>
   <div class="card-container">
     {#each $CharacterStore as character (character.id)}
       <Card {character} />
@@ -30,9 +29,7 @@
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 0.5em;
-  }
-  p {
-    font-weight: 500;
+    padding: 40px 0;
   }
   @media (max-width: 640px) {
     .card-container {
