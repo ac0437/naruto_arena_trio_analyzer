@@ -97,7 +97,7 @@ export const CharacterStore = writable([
     "Stun"]},
     {"id":48,"name":"Kidomaru","banned":"No","stun":"No","chakra_drain":"No","aoe":"Yes","heal":"No","counter_reflect":"Yes","skill_effects":["AoE Offensive",
     "Counter"]},
-    {"id":49,"name":"Sakon and Ukon","banned":"No","stun":"No","chakra_drain":"No","aoe":"No","heal":"Yes","counter_reflect":"No","skill_effects":["Affliction",
+    {"id":49,"name":"Sakon And Ukon","banned":"No","stun":"No","chakra_drain":"No","aoe":"No","heal":"Yes","counter_reflect":"No","skill_effects":["Affliction",
     "Healer"]},
     {"id":50,"name":"Jirobo","banned":"No","stun":"No","chakra_drain":"Yes","aoe":"Yes","heal":"No","counter_reflect":"No","skill_effects":["AoE Offensive/Defensive",
     "Chakra Drain"]},
