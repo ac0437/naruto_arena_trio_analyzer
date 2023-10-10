@@ -428,7 +428,7 @@ export const CharacterStore = writable([
     "Destroy DD",
     "Healer",
     "Stun"]},
-    {"id":187,"name":"Six tails Kyubi Naruto S","banned":"No","stun":"No","chakra_drain":"No","aoe":"No","heal":"No","counter_reflect":"No","skill_effects":[]},
+    {"id":187,"name":"Six Tails Kyubi Naruto S","banned":"No","stun":"No","chakra_drain":"No","aoe":"No","heal":"No","counter_reflect":"No","skill_effects":[]},
     {"id":188,"name":"Deva Path Pain S","banned":"No","stun":"Yes","chakra_drain":"No","aoe":"Yes","heal":"No","counter_reflect":"No","skill_effects":["AoE Offensive",
     "Chakra Increase",
     "Stun"]},
