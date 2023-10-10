@@ -22,6 +22,11 @@
   let checkForCountersOrReflects = $SelectedCharacterStore.filter(
     (character) => character.counter_reflect === 'Yes'
   );
+  let checkForAffliction = $SelectedCharacterStore.filter(
+    (character) => character.skill_effects.indexOf('Affliction') !== -1
+  );
+
+  console.log('check afflicitons', checkForAffliction);
 
   onMount(() => {
     if (checkForBannedCharacters.length >= 1) {
@@ -34,8 +39,12 @@
     if (checkForStunners.length > 2) {
       analysisTeamText = `Illegal this is a full stun team`;
     }
-    if (checkForChakraDrain.length > 2) {
-      analysisTeamText = `Illegal this is a full chakra drain team`;
+    if (checkForChakraDrain.length > 1) {
+      const checkForCharacters = checkForChakraDrain.map(
+        (character) => character.name
+      );
+      const chakraDrainers = checkForCharacters.join(', ');
+      analysisTeamText = `Illegal, this team has atleast 2/3 chakra drainers (${chakraDrainers})`;
     }
     if (checkForAoe.length > 2) {
       analysisTeamText = `Illegal this is a full AOE team`;
@@ -46,12 +55,16 @@
     if (checkForCountersOrReflects.length > 2) {
       analysisTeamText = `Illegal this is a full counter/reflect team`;
     }
+    if (checkForAffliction.length > 2) {
+      analysisTeamText = `Illegal this is a full affliction team`;
+    }
     if (
       checkForBannedCharacters.length < 1 &&
       checkForStunners.length < 3 &&
-      checkForChakraDrain.length < 3 &&
+      checkForChakraDrain.length < 2 &&
       checkForAoe.length < 3 &&
       checkForHealers.length < 3 &&
+      checkForAffliction.length < 3 &&
       checkForCountersOrReflects.length < 3
     ) {
       analysisTeamText = `This team is legal and ready to fight!`;

@@ -74,7 +74,7 @@ export const CharacterStore = writable([
     {"id":38,"name":"Mitarashi Anko","banned":"No","stun":"No","chakra_drain":"No","aoe":"Yes","heal":"No","counter_reflect":"No","skill_effects":["Affliction",
     "AoE Offensive",
     "Unable to Reduce Damage/Invuln"]},
-    {"id":39,"name":"Shiore","banned":"No","stun":"Yes","chakra_drain":"No","aoe":"No","heal":"Yes","counter_reflect":"No","skill_effects":["Affliction",
+    {"id":39,"name":"Shiore","banned":"No","stun":"Yes","chakra_drain":"No","aoe":"Yes","heal":"Yes","counter_reflect":"No","skill_effects":["Affliction",
     "Chakra Increase",
     "Healer",
     "Stun"]},
