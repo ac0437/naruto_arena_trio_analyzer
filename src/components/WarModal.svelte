@@ -4,6 +4,17 @@
   import { SelectedCharacterStore } from '../selected_character_store';
   import Card from './Card.svelte';
   let analysisTeamText = '';
+  let banAnalysisText = '';
+  let stunAnalysisText = '';
+  let chakraDrainAnalysisText = '';
+  let aoeAnalysisText = '';
+  let healerAnalysisText = '';
+  let counterOrReflectAnalysisText = '';
+  let afflictionAnalysisText = '';
+  let analysisArray = [];
+
+  let illegalTrio = true;
+  let bannedCharacters = '';
   let checkForBannedCharacters = $SelectedCharacterStore.filter(
     (character) => character.banned === 'Yes'
   );
@@ -26,37 +37,64 @@
     (character) => character.skill_effects.indexOf('Affliction') !== -1
   );
 
-  console.log('check afflicitons', checkForAffliction);
-
   onMount(() => {
+    if (checkForStunners.length > 2) {
+      const stunners = checkForStunners.map((character) => character.name);
+      const illegalCharacters = stunners.join(', ');
+      bannedCharacters += illegalCharacters;
+      stunAnalysisText = `Full stun team`;
+      analysisArray = [...analysisArray, stunAnalysisText];
+    }
+    if (checkForChakraDrain.length > 1) {
+      const checkForChakraDrainers = checkForChakraDrain.map(
+        (character) => character.name
+      );
+      const chakraDrainers = checkForChakraDrainers.join(', ');
+      const illegalCharacters = chakraDrainers;
+      bannedCharacters += illegalCharacters;
+      chakraDrainAnalysisText = `Chakra drainers: ${chakraDrainers}`;
+      analysisArray = [...analysisArray, chakraDrainAnalysisText];
+    }
+    if (checkForAoe.length > 2) {
+      const checkAoE = checkForAoe.map((character) => character.name);
+      const illegalCharacters = checkAoE.join(', ');
+      bannedCharacters += illegalCharacters;
+      aoeAnalysisText = `Full AoE team`;
+      analysisArray = [...analysisArray, aoeAnalysisText];
+    }
+    if (checkForHealers.length > 2) {
+      const healers = checkForHealers.map((character) => character.name);
+      const illegalCharacters = healers.join(', ');
+      bannedCharacters += illegalCharacters;
+      healerAnalysisText = `Full healer team`;
+      analysisArray = [...analysisArray, healerAnalysisText];
+    }
+    if (checkForCountersOrReflects.length > 2) {
+      const counterOrReflect = checkForCountersOrReflects.map(
+        (character) => character.name
+      );
+      const illegalCharacters = counterOrReflect.join(', ');
+      bannedCharacters += illegalCharacters;
+      counterOrReflectAnalysisText = `Full counter/reflect team`;
+      analysisArray = [...analysisArray, counterOrReflectAnalysisText];
+    }
+    if (checkForAffliction.length > 2) {
+      const afflictionCharacters = checkForAffliction.map(
+        (character) => character.name
+      );
+      const illegalCharacters = afflictionCharacters.join(', ');
+      bannedCharacters += illegalCharacters;
+      afflictionAnalysisText = `Full affliction team`;
+      analysisArray = [...analysisArray, afflictionAnalysisText];
+    }
     if (checkForBannedCharacters.length >= 1) {
       const checkForCharacters = checkForBannedCharacters.map(
         (character) => character.name
       );
       const illegalCharacters = checkForCharacters.join(', ');
-      analysisTeamText = `Illegal, ${illegalCharacters} are banned\n`;
-    }
-    if (checkForStunners.length > 2) {
-      analysisTeamText = `Illegal this is a full stun team`;
-    }
-    if (checkForChakraDrain.length > 1) {
-      const checkForCharacters = checkForChakraDrain.map(
-        (character) => character.name
-      );
-      const chakraDrainers = checkForCharacters.join(', ');
-      analysisTeamText = `Illegal, this team has atleast 2/3 chakra drainers (${chakraDrainers})`;
-    }
-    if (checkForAoe.length > 2) {
-      analysisTeamText = `Illegal this is a full AOE team`;
-    }
-    if (checkForHealers.length > 2) {
-      analysisTeamText = `Illegal this is a full healer team`;
-    }
-    if (checkForCountersOrReflects.length > 2) {
-      analysisTeamText = `Illegal this is a full counter/reflect team`;
-    }
-    if (checkForAffliction.length > 2) {
-      analysisTeamText = `Illegal this is a full affliction team`;
+      bannedCharacters += illegalCharacters;
+      banAnalysisText = `Banned character(s): ${illegalCharacters} are banned`;
+      analysisArray = [...analysisArray, banAnalysisText];
     }
     if (
       checkForBannedCharacters.length < 1 &&
@@ -68,6 +106,7 @@
       checkForCountersOrReflects.length < 3
     ) {
       analysisTeamText = `This team is legal and ready to fight!`;
+      illegalTrio = false;
     }
   });
 </script>
@@ -79,11 +118,20 @@
         ? 'red'
         : 'green'}
     >
-      {analysisTeamText}
+      {#if analysisTeamText !== ''}
+        {analysisTeamText}
+      {:else}
+        Team is illegal because:
+      {/if}
     </h2>
+    <ol class="reason-list">
+      {#each analysisArray as reason, i}
+        <li class="reason-item">{reason}</li>
+      {/each}
+    </ol>
     <div class="card-container">
       {#each $SelectedCharacterStore as character (character.id)}
-        <Card {character}>
+        <Card {character} illegalTeam={illegalTrio} {bannedCharacters}>
           <div>
             <ul>
               <h3>War Categories</h3>
@@ -134,13 +182,19 @@
   }
   h2 {
     margin: 0;
-    padding-bottom: 1em;
   }
   .red {
     color: red;
   }
   .green {
     color: green;
+  }
+  .reason-list {
+    margin: 0;
+    padding-bottom: 1em;
+  }
+  .reason-item {
+    font-weight: 500;
   }
   @media (max-width: 640px) {
     .card-container {
