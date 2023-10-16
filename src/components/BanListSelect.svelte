@@ -5,9 +5,10 @@
   const originalStore = structuredClone($CharacterStore);
   let banListKeys;
   onMount(() => {
-    const getBanLists = localStorage.getItem('banlist');
+    const getBanLists = localStorage.getItem('banlists');
 
-    if (getBanLists === undefined) {
+    console.log(getBanLists);
+    if (getBanLists === null) {
       localStorage.setItem('banlists', JSON.stringify({}));
     } else {
       banListKeys = Object.keys(JSON.parse(localStorage.getItem('banlists')));
@@ -43,7 +44,7 @@
 
 <select on:change={(e) => onSelection(e)}>
   <option>Default</option>
-  {#if banListKeys}
+  {#if banListKeys !== undefined}
     {#each banListKeys as key, i}
       <option value={key}>
         {key}

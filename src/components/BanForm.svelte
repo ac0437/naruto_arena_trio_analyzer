@@ -6,10 +6,13 @@
       .getElementById('character-list')
       .value.split(',');
     const getBanLists = JSON.parse(localStorage.getItem('banlists'));
+    console.log(getBanLists[name]);
     if (getBanLists[name] !== undefined) {
       return;
     }
+    console.log(characterList);
     getBanLists[name] = characterList;
+    console.log('new banlist', getBanLists);
     localStorage.setItem('banlists', JSON.stringify(getBanLists));
   }
 </script>
