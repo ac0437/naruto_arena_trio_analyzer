@@ -8,8 +8,6 @@
   const originalStore = $CharacterStore.map((character) => character);
   $: selected = [];
 
-  console.log(bannedCharacters);
-  console.log('illegal team', illegalTeam);
   function selectedCharacter(name) {
     let index = originalStore.map((character) => character.name).indexOf(name);
     let selectedCharacter = originalStore[index];
@@ -33,7 +31,6 @@
   }
 
   function removeCharacter(name) {
-    console.log('removing', name);
     SelectedCharacterStore.update((characters) => {
       let newSelectedCharacters = characters.filter(
         (selectedCharacter) => selectedCharacter.name != name

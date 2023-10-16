@@ -1,8 +1,11 @@
 <!-- @format -->
 <script>
+  import BanListSelect from './BanListSelect.svelte';
+  import BanForm from './BanForm.svelte';
   import { CharacterStore } from '../character_store';
   import { SelectedCharacterStore } from '../selected_character_store';
   let characterName = '';
+  let createBanList = false;
   const originalStore = $CharacterStore.map((character) => character);
 
   function filterCharacter() {
@@ -13,6 +16,14 @@
       );
       return filtered;
     });
+  }
+
+  function showBanListForm() {
+    createBanList = true;
+  }
+
+  function closeBanListForm() {
+    createBanList = false;
   }
 </script>
 
@@ -33,6 +44,14 @@
       {$SelectedCharacterStore.length}/3
     {/if}
   </p>
+  <BanListSelect />
+  <button on:click={() => showBanListForm()}>Create a ban list</button>
+  {#if createBanList}
+    <button class="close-form" on:click={() => closeBanListForm()}
+      ><span class="material-symbols-outlined">cancel</span></button
+    >
+    <BanForm />
+  {/if}
 </div>
 
 <style>
@@ -55,5 +74,14 @@
   }
   span {
     font-weight: 500;
+  }
+  .close-form {
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 999999;
+    color: white;
+    background: transparent;
+    border: none;
   }
 </style>
