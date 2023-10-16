@@ -6,15 +6,6 @@
   import CharacterFilter from './components/CharacterFilter.svelte';
   // import WarFilter from './components/WarFilter.svelte';
   import WarModal from './components/WarModal.svelte';
-  import { onMount } from 'svelte';
-
-  onMount(() => {
-    const getBanLists = localStorage.getItem('banlist');
-
-    if (getBanLists === undefined) {
-      localStorage.setItem('banlists', JSON.stringify({}));
-    }
-  });
 </script>
 
 <main>

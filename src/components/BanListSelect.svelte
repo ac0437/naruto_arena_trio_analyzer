@@ -3,9 +3,16 @@
   import { onMount } from 'svelte';
   import { CharacterStore } from '../character_store';
   const originalStore = structuredClone($CharacterStore);
+  let banListKeys;
+  onMount(() => {
+    const getBanLists = localStorage.getItem('banlist');
 
-  const banListKeys = Object.keys(JSON.parse(localStorage.getItem('banlists')));
-
+    if (getBanLists === undefined) {
+      localStorage.setItem('banlists', JSON.stringify({}));
+    } else {
+      banListKeys = Object.keys(JSON.parse(localStorage.getItem('banlists')));
+    }
+  });
   function onSelection(e) {
     const key = e.target.value;
     if (key.toLowerCase() === 'default') {
@@ -36,9 +43,11 @@
 
 <select on:change={(e) => onSelection(e)}>
   <option>Default</option>
-  {#each banListKeys as key, i}
-    <option value={key}>
-      {key}
-    </option>
-  {/each}
+  {#if banListKeys}
+    {#each banListKeys as key, i}
+      <option value={key}>
+        {key}
+      </option>
+    {/each}
+  {/if}
 </select>

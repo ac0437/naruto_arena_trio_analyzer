@@ -45,7 +45,7 @@
     {/if}
   </p>
   <BanListSelect />
-  <button on:click={() => showBanListForm()}>Create a ban list (beta)</button>
+  <button on:click={() => showBanListForm()}>Create a ban list (Beta)</button>
   {#if createBanList}
     <button class="close-form" on:click={() => closeBanListForm()}
       ><span class="material-symbols-outlined">cancel</span></button
